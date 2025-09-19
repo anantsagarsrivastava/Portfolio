@@ -1,102 +1,97 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Anant Sagar Srivastava - Portfolio</title>
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
-    :root {
-      --primary-color: #FF0000; /* Red for highlights */
-      --secondary-color: #e5e5e5; /* Light gray text */
-      --bg-dark: #000000; /* Black background */
-    }
 
-    body {
+  <style>
+    :root{
+      --primary-color: #FF0000;
+      --secondary-color: #e5e5e5;
+      --bg-dark: #000000;
+    }
+    body{
       font-family: 'Inter', sans-serif;
-      background-color: var(--bg-dark);
+      background: var(--bg-dark);
       color: var(--secondary-color);
       overflow-x: hidden;
     }
-    
-    h1, h2, h3 {
-      font-family: 'Poppins', sans-serif;
-    }
+    h1,h2,h3{ font-family: 'Poppins', sans-serif; }
 
-    /* Card animations */
-    .card-animate {
-      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .card-animate:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 0 25px rgba(255, 0, 0, 0.8); /* Red glow */
-    }
-    
-    /* Skills badges */
-    .skill-badge {
-      transition: all 0.3s ease-in-out;
-      border: 1px solid transparent;
-    }
-    .skill-badge:hover {
-      transform: scale(1.05);
-      border-color: var(--primary-color);
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.8); /* Red glow */
-    }
-    
-    /* Glassmorphism */
-    .glass {
-      background: rgba(255, 255, 255, 0.08);
+    /* Card hover */
+    .card-animate{ transition: all 0.3s cubic-bezier(.25,.46,.45,.94); }
+    .card-animate:hover{ transform: translateY(-8px) scale(1.02); box-shadow: 0 0 25px rgba(255,0,0,0.8); }
+
+    /* Skill badges */
+    .skill-badge{ transition: all .3s ease-in-out; border:1px solid transparent; }
+    .skill-badge:hover{ transform: scale(1.05); border-color: var(--primary-color); box-shadow: 0 0 15px rgba(255,0,0,0.8); }
+
+    /* Glass */
+    .glass{
+      background: rgba(255,255,255,0.08);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255,255,255,0.12);
     }
 
-    /* Scroll animations */
-    .animate-on-scroll {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease-out;
-    }
-    .animate-on-scroll.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    /* Scroll animation */
+    .animate-on-scroll{ opacity: 0; transform: translateY(15px); transition: opacity .3s ease-out, transform .3s ease-out; }
+    .animate-on-scroll.show{ opacity: 1; transform: translateY(0); }
 
-    /* Matrix background canvas */
-    #matrixCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      background: black;
+    /* Matrix canvas */
+    #matrixCanvas{ position: fixed; inset: 0; width:100%; height:100%; z-index:0; pointer-events:none; background:black; }
+
+    header, main, footer, nav{ position: relative; z-index: 10; }
+
+    /* ---- GLOWY BUTTON ---- */
+    .glow-btn{
+      position: relative;
+      display: inline-block;
+      padding: .56rem 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      border-radius: 999px;
+      background: linear-gradient(90deg,#ff4b2b,#ff416c);
+      box-shadow: 0 6px 22px rgba(255,65,65,0.14), inset 0 -4px 8px rgba(0,0,0,0.18);
+      overflow: hidden;
+      transition: transform .18s ease, box-shadow .18s ease;
+      text-decoration: none;
+    }
+    .glow-btn:hover{ transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 36px rgba(255,65,65,0.28); }
+    .glow-btn::after{
+      content: "";
+      position: absolute;
+      top: -40%;
+      left: -60%;
+      width: 40%;
+      height: 180%;
+      background: linear-gradient(120deg, rgba(255,255,255,0.28), rgba(255,255,255,0.06), rgba(255,255,255,0));
+      transform: rotate(20deg);
+      transition: left .75s cubic-bezier(.2,.9,.2,1);
       pointer-events: none;
     }
-
-    /* Content above animation */
-    header, main, footer, nav {
-      position: relative;
-      z-index: 10;
-    }
+    .glow-btn:hover::after{ left: 120%; }
+    .glow-btn .btn-icon{ margin-left: .5rem; opacity: .95; }
+    .glow-btn:focus{ outline: 3px solid rgba(255,75,75,0.18); outline-offset: 4px; }
   </style>
 </head>
 <body class="bg-black text-slate-200">
 
-  <!-- Matrix Animation Background -->
+  <!-- Matrix Background -->
   <canvas id="matrixCanvas"></canvas>
 
   <!-- Navigation -->
   <nav class="fixed top-0 z-50 w-full bg-black/90 backdrop-blur-sm p-4 md:p-6 shadow-lg">
     <div class="container mx-auto flex justify-between items-center">
-      <a href="#" class="text-xl md:text-2xl font-bold text-white hover:text-red-500 transition-colors">
-        Anant Sagar
-      </a>
+      <a href="#" class="text-xl md:text-2xl font-bold text-white hover:text-red-500 transition-colors">Anant Sagar</a>
       <div class="hidden md:flex space-x-6 lg:space-x-10">
         <a href="#about" class="text-slate-300 hover:text-red-500 transition-colors">About</a>
         <a href="#skills" class="text-slate-300 hover:text-red-500 transition-colors">Skills</a>
@@ -107,35 +102,23 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
+  <!-- Hero -->
   <header id="hero" class="relative min-h-screen flex items-center justify-center p-4 text-center">
     <div class="relative z-10 animate-on-scroll">
       <div class="flex justify-center mb-6">
-        <img src="photo1.jpg" alt="My Profile Photo" 
-             class="w-36 h-36 md:w-48 md:h-48 rounded-full border-4 border-red-600 shadow-xl transition-all hover:scale-105">
+        <img src="photo1.jpg" alt="My Profile Photo" class="w-36 h-36 md:w-48 md:h-48 rounded-full border-4 border-red-600 shadow-xl transition-all hover:scale-105">
       </div>
-      <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-2">
-        Hi, I'm Anant Sagar Srivastava.
-      </h1>
-      <p class="text-xl md:text-3xl font-medium text-slate-400 mb-6">
-        B.Tech in Computer Science
-      </p>
+      <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-2">Hi, I'm Anant Sagar Srivastava.</h1>
+      <p class="text-xl md:text-3xl font-medium text-slate-400 mb-6">B.Tech in Computer Science</p>
       <div class="flex justify-center space-x-4 md:space-x-6 animate-on-scroll">
-        <a href="https://github.com/anantsagarsrivastava" target="_blank" class="w-12 h-12 flex items-center justify-center rounded-full bg-slate-900 text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-500">
-          <i class="fab fa-github fa-lg"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/anant-sagar-srivastava-577aa6284" target="_blank" class="w-12 h-12 flex items-center justify-center rounded-full bg-slate-900 text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-500">
-          <i class="fab fa-linkedin-in fa-lg"></i>
-        </a>
-        <a href="https://leetcode.com/u/anantsagarsrivastava/" target="_blank" class="w-12 h-12 flex items-center justify-center rounded-full bg-slate-900 text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-500">
-          <i class="fas fa-code fa-lg"></i>
-        </a>
+        <a href="https://github.com/anantsagarsrivastava" target="_blank" class="w-12 h-12 flex items-center justify-center rounded-full bg-slate-900 text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-500"><i class="fab fa-github fa-lg"></i></a>
+        <a href="https://www.linkedin.com/in/anant-sagar-srivastava-577aa6284" target="_blank" class="w-12 h-12 flex items-center justify-center rounded-full bg-slate-900 text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-500"><i class="fab fa-linkedin-in fa-lg"></i></a>
+        <a href="https://leetcode.com/u/anantsagarsrivastava/" target="_blank" class="w-12 h-12 flex items-center justify-center rounded-full bg-slate-900 text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-500"><i class="fas fa-code fa-lg"></i></a>
       </div>
     </div>
   </header>
 
   <main class="container mx-auto p-4 md:p-8 space-y-24">
-
     <!-- About -->
     <section id="about" class="animate-on-scroll">
       <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">About Me</h2>
@@ -150,51 +133,51 @@
     <section id="skills" class="animate-on-scroll">
       <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">Skills</h2>
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 text-center">
-        <div class="p-6 glass rounded-xl shadow-lg card-animate skill-badge">
-          <i class="fab fa-js-square text-4xl mb-2 text-yellow-400"></i>
-          <p class="font-medium">JavaScript</p>
-        </div>
-        <div class="p-6 glass rounded-xl shadow-lg card-animate skill-badge">
-          <i class="fab fa-python text-4xl mb-2 text-blue-500"></i>
-          <p class="font-medium">Python</p>
-        </div>
-        <div class="p-6 glass rounded-xl shadow-lg card-animate skill-badge">
-          <i class="fas fa-database text-4xl mb-2 text-indigo-500"></i>
-          <p class="font-medium">MySQL</p>
-        </div>
-        <div class="p-6 glass rounded-xl shadow-lg card-animate skill-badge">
-          <i class="fab fa-html5 text-4xl mb-2 text-red-500"></i>
-          <p class="font-medium">HTML</p>
-        </div>
-        <div class="p-6 glass rounded-xl shadow-lg card-animate skill-badge">
-          <i class="fas fa-code text-4xl mb-2 text-purple-500"></i>
-          <p class="font-medium">C++</p>
-        </div>
+        <div class="p-6 glass rounded-xl shadow-lg card-animate skill-badge"><i class="fab fa-js-square text-4xl mb-2 text-yellow-400"></i><p class="font-medium">JavaScript</p></div>
+        <div class="p-6 glass rounded-xl shadow-lg card-animate skill-badge"><i class="fab fa-python text-4xl mb-2 text-blue-500"></i><p class="font-medium">Python</p></div>
+        <div class="p-6 glass rounded-xl shadow-lg card-animate skill-badge"><i class="fas fa-database text-4xl mb-2 text-indigo-500"></i><p class="font-medium">MySQL</p></div>
+        <div class="p-6 glass rounded-xl shadow-lg card-animate skill-badge"><i class="fab fa-html5 text-4xl mb-2 text-red-500"></i><p class="font-medium">HTML</p></div>
+        <div class="p-6 glass rounded-xl shadow-lg card-animate skill-badge"><i class="fas fa-code text-4xl mb-2 text-purple-500"></i><p class="font-medium">C++</p></div>
       </div>
     </section>
 
-    <!-- Certifications -->
+    <!-- Certifications (New Layout: Left Tabs + Right Preview) -->
     <section id="certifications" class="animate-on-scroll">
       <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">Certifications</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <a href="https://www.sololearn.com/certificates/CC-BJZBBMN1" target="_blank" class="block">
-          <div class="p-6 glass rounded-xl shadow-lg card-animate h-full">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Left Tabs -->
+        <div class="flex flex-col space-y-6">
+          <div class="cert-card glass rounded-xl card-animate p-6 cursor-pointer" data-preview="c++.jpg">
             <h3 class="text-xl font-bold text-white mb-2">Introduction to C++</h3>
-            <p class="text-slate-400 mb-1">Sololearn</p>
+            <p class="text-slate-400 mb-4">Sololearn</p>
+            <a class="glow-btn" href="https://www.sololearn.com/certificates/CC-BJZBBMN1" target="_blank">
+              <span>View Certificate</span><i class="fas fa-external-link-alt btn-icon"></i>
+            </a>
           </div>
-        </a>
-        <a href="https://www.sololearn.com/certificates/CC-PE5QQYTY" target="_blank" class="block">
-          <div class="p-6 glass rounded-xl shadow-lg card-animate h-full">
+          <div class="cert-card glass rounded-xl card-animate p-6 cursor-pointer" data-preview="python.jpg">
             <h3 class="text-xl font-bold text-white mb-2">Introduction to Python</h3>
-            <p class="text-slate-400 mb-1">Sololearn</p>
+            <p class="text-slate-400 mb-4">Sololearn</p>
+            <a class="glow-btn" href="https://www.sololearn.com/certificates/CC-PE5QQYTY" target="_blank">
+              <span>View Certificate</span><i class="fas fa-external-link-alt btn-icon"></i>
+            </a>
           </div>
-        </a>
-        <a href="https://moonshot.scaler.com/s/li/FOKD0s1TSD" target="_blank" class="block">
-          <div class="p-6 glass rounded-xl shadow-lg card-animate h-full">
+          <div class="cert-card glass rounded-xl card-animate p-6 cursor-pointer" data-preview="scalar.jpg">
             <h3 class="text-xl font-bold text-white mb-2">Certificate of Excellence in C++</h3>
-            <p class="text-slate-400 mb-1">Scaler</p>
+            <p class="text-slate-400 mb-4">Scaler</p>
+            <a class="glow-btn" href="https://moonshot.scaler.com/s/li/FOKD0s1TSD" target="_blank">
+              <span>View Certificate</span><i class="fas fa-external-link-alt btn-icon"></i>
+            </a>
           </div>
-        </a>
+        </div>
+
+        <!-- Right Preview -->
+        <div class="flex items-center justify-center">
+          <div id="cert-preview-box" class="opacity-0 transform scale-95 transition-all duration-500 ease-out">
+            <img id="cert-preview-img" src="" alt="Certification Preview"
+                 class="rounded-xl shadow-2xl max-h-[400px] w-auto object-contain border border-slate-700" />
+          </div>
+        </div>
       </div>
     </section>
 
@@ -224,17 +207,10 @@
     <section id="contact" class="animate-on-scroll">
       <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">Contact Me</h2>
       <div class="p-6 md:p-8 glass rounded-2xl shadow-xl card-animate text-center space-y-4">
-        <p class="text-lg">
-          <i class="fas fa-phone-alt text-red-500 mr-2"></i> 
-          <a href="tel:+917887274590" class="hover:text-red-500">+91 7887274590</a>
-        </p>
-        <p class="text-lg">
-          <i class="fas fa-envelope text-red-500 mr-2"></i> 
-          <a href="mailto:anantsagar064@gmail.com" class="hover:text-red-500">anantsagar064@gmail.com</a>
-        </p>
+        <p class="text-lg"><i class="fas fa-phone-alt text-red-500 mr-2"></i><a href="tel:+917887274590" class="hover:text-red-500">+91 7887274590</a></p>
+        <p class="text-lg"><i class="fas fa-envelope text-red-500 mr-2"></i><a href="mailto:anantsagar064@gmail.com" class="hover:text-red-500">anantsagar064@gmail.com</a></p>
       </div>
     </section>
-
   </main>
 
   <!-- Footer -->
@@ -246,57 +222,54 @@
   <script>
     const canvas = document.getElementById("matrixCanvas");
     const ctx = canvas.getContext("2d");
-
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-
-    const binary = "01";
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-
-    let drops = [];
-    for (let x = 0; x < columns; x++) drops[x] = 1;
-
-    function draw() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = "#FF0000"; 
-      ctx.font = fontSize + "px monospace";
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = binary.charAt(Math.floor(Math.random() * binary.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
-          drops[i] = 0;
-
+    function resizeCanvas(){ canvas.height = window.innerHeight; canvas.width = window.innerWidth; }
+    resizeCanvas();
+    const binary = "01", fontSize = 14;
+    let columns = Math.floor(canvas.width / fontSize);
+    let drops = Array(columns).fill(1);
+    function draw(){
+      ctx.fillStyle = "rgba(0,0,0,0.1)"; ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = "#FF0000"; ctx.font = fontSize + "px monospace";
+      for(let i=0;i<drops.length;i++){
+        const text = binary.charAt(Math.floor(Math.random()*binary.length));
+        ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+        if(drops[i]*fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
         drops[i]++;
       }
     }
     setInterval(draw, 50);
-
-    window.addEventListener("resize", () => {
-      canvas.height = window.innerHeight;
-      canvas.width = window.innerWidth;
-    });
+    window.addEventListener('resize', () => { resizeCanvas(); columns = Math.floor(canvas.width / fontSize); drops = Array(columns).fill(1); });
   </script>
 
-  <!-- Scroll Animation Script -->
+  <!-- Scroll animation -->
   <script>
     const scrollElements = document.querySelectorAll(".animate-on-scroll");
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-        } else {
-          entry.target.classList.remove("show"); // Reset when out of view
-        }
+        if(entry.isIntersecting) entry.target.classList.add("show");
+        else entry.target.classList.remove("show");
       });
     }, { threshold: 0.2 });
-
     scrollElements.forEach(el => observer.observe(el));
+  </script>
+
+  <!-- Certifications Preview Script -->
+  <script>
+    const certCards = document.querySelectorAll(".cert-card");
+    const previewBox = document.getElementById("cert-preview-box");
+    const previewImg = document.getElementById("cert-preview-img");
+    certCards.forEach(card => {
+      card.addEventListener("mouseenter", () => {
+        const imgSrc = card.getAttribute("data-preview");
+        previewImg.src = imgSrc;
+        previewBox.classList.remove("opacity-0", "scale-95");
+        previewBox.classList.add("opacity-100", "scale-100");
+      });
+      card.addEventListener("mouseleave", () => {
+        previewBox.classList.remove("opacity-100", "scale-100");
+        previewBox.classList.add("opacity-0", "scale-95");
+      });
+    });
   </script>
 
 </body>
